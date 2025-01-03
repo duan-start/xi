@@ -1,0 +1,4 @@
+《《《 
+ git +clash 
+  配置两个代理环境  git config --global  http.proxy http://127.0.0.1:7890
+                              --                           https.proxy https://127.0.0.1:7890;(clash的端口，不要加上那个‘’)
