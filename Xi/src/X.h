@@ -1,7 +1,8 @@
 #pragma once
 //Only uesd by client, not by server
-//用于给客户端导入代码的，提高代码复用性
+//to be used by client ,(do not konw why can not ues chinese)
 #include "Core.h"
-#include "stdio.h"
+#include "Log.h"
 #include "Application.h"
+//-----------------------------------------------
 #include "EntryPoint.h"

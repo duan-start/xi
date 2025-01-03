@@ -3,8 +3,12 @@
 bin-int/
 bin/
 
+#外部依赖的文件
+Xi/vendor/
+
 #忽略的文件，一些环境配置的文件，这些我们会通过一些脚本帮助构建
 
 *.vcxproj
 *.filters
 *.user
+
