@@ -1,0 +1,75 @@
+.Log
+   # premake 是一个自动构建系统的轻量级程序，使用方法是根据规则写一个脚本(premake.lua)，然后又该程序打开该脚本，进行对应vs 版本的sln(环境配置)
+
+   #本质上和cmake (cmakelist)是差不多的
+   
+ #宏定义（在字符串里面的 ，在传递给应用程序进行系统构建时会自动的被替换（就像我们自己写的着色器封装一样，一种流stream 类））
+   
+   #注意一个特点是，很多定义的路径，其他（总之不是关键词，而且个性化比较强烈，一般都是通过类似于字符串的方法进行存储）
+
+  #路径的一些基本知识 
+     只有在哦windows 里面才会用转义符号\,其他的语言里面其实都不会这么做
+
+
+   --workspace "Xi " --是指一个项目集，通俗来讲就是这个解决方案的名称
+   --architecture "x64" --架构，一般x64 是在x86 的属性扩展而来，ARM 架构的64 一般是指单片机的精简指令集一类的扩展而来。
+   --configuration {   "Debug","Release"," Dist" }  release 用于生产环境，指优化的过程
+                                                                     dist 是指分发版本，包含特定的优化或配置
+    --outputdir(这个是自己自定义 类似python)  = “%{cfg.buildcfg}-%{   }”
+     构建的一个全局定义
+     --- 字符串里面的宏定义，类似于vs里面的$(SolutionDir) ,不过他的宏定义规则是 %{cfg.buildcfg} ,如果要看具体的，直接去github 里面的premake 的Wiki 搜索tokens(词元)，
+ 然后就会有一些列的宏定义 
+       
+     --在workspace 之后，就要开始对具体的项目进行构建 
+ 
+      project “%{prj.name}”--第一次的时候，不要这样写，不然系统从哪里可以识别这个具体的宏定义 
+      proejct "prjdename"
+      location "在解决方案中的那个文件夹中"
+     kind "ShareLib"  ConsokeApp 【这里面还有大学问】
+             现在不用太管，主要是StaticLib
+     language "C++"
+     
+     targetdir ()  最后可执行程序和动态库（已经连接好的），
+     objdir()      编译的文件  .obj  
+     #一切的路径都是基于解决方案的路径
+     #在premake 的lua 语言中, space .. space 是字符串连接的运算符 。去存储路径
+
+     files{  “%{prj.name}/src/**.h”，
+                 “%{prj.name}/src/*.cpp”
+                   }  --在这个项目里面的src文件夹，里面，去递归的找到所有头文件
+     
+     includedirs{ “” }   --附加库目录
+
+     links {}
+     1."reference "
+    2."系统库"                     都不需要任何前缀和后缀，premake 会自动构建     
+
+      filters "system :windows"
+                 cppdialect "C++17"  编译器
+                 staticruntime"On"  编译后的.exe不需要依赖外部文件
+                systemversion "Latest"
+                --为不同的平台下去配置不同的内容 linux ,windows
+       
+     defines {
+		"预处理器里面的内容"
+		}
+
+      postbuildcommands{   }  ---系统构建完成后的shell命令 ，
+           “{
+		（“{COPYFILE}  %{defaultdir} %{targetdir}“）	目录 ../bin 当前目录的上一目录的（而不是指解决方案的）
+			}”
+   
+       --必须先创建这个文件夹sandbox(后面的还没有去生成)，否则的话这个指令很可能会失败
+
+    filter "configurations : Debug"
+          defines "  对应的预处理 X_Debug
+          symbols "On" 调试信息  ，  release optimize "On",优化
+     filter ""
+    
+     filter {"system:windows","configuration:Release" }
+     ---同时指定多种筛选器，进行对应的配置
+         buildoption                     --runtime library(多线程运行库)
+
+ 
+
+ 

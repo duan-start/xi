@@ -1,0 +1,22 @@
+.Log 
+ 几个常见的操作
+ git clone  ....git  your/path
+ git submodule add .....(url)  your/path 
+ --这两个的区别是，一个是直接下载（需要实际更改的），一个是外部引用（依赖库）
+ --git status 
+--git reset .
+ --git add *
+  --git commit -m ""
+  --git push origin main 
+  --git branch 
+  --git switch 
+  --git log
+ --还有一个git hard (好像)，回到某一个提交的状态
+ --除了reset 可以回退，好像，check (checkout),也有相应的回退和切换branch
+
+  --如果要更改.gitsubmodules 里面的文件路径，单纯在里面修改是没有用的，必须反馈到git 仓库里面
+   git submodule sync（同步）
+  git mv old/path/to/your_submodule new/path/to/your_submodule（移动）
+git config -f .git/config submodule.your_submodule_name.path new/path/to/your_submodule （git 仓库的配置）
+ git add .gitmodules new/path/to/your_submodule  
+git commit -m "Updated submodule path"  （提交和查看）

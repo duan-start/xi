@@ -1,7 +1,7 @@
 #pragma once
 #include <memory.h>
 
-#include <Core.h>
+#include "Core.h"
 #include <spdlog/spdlog.h>
 namespace X {
 	class  X_API Log
